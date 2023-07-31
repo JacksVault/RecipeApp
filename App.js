@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
+import HTML from 'react-native-render-html';
 
 const API_KEY = '3ad313351a7449639612b18f3969f4b3';
 const API_URL = 'https://api.spoonacular.com/recipes/findByIngredients';
@@ -54,9 +55,11 @@ const App = () => {
               style={styles.recipeImage}
             />
           )}
-          <Text style={styles.recipeInstructions}>
-            {recipe.instructions || 'Instructions not available.'}
-          </Text>
+          <HTML
+            source={{ html: recipe.instructions || 'Instructions not available.' }}
+            containerStyle={styles.recipeInstructions}
+            tagsStyles={{ ol: { paddingLeft: 20 } }}
+          />
         </View>
       )}
       {error !== '' && <Text style={styles.errorText}>{error}</Text>}
@@ -102,6 +105,7 @@ const styles = StyleSheet.create({
   recipeInstructions: {
     fontSize: 16,
     textAlign: 'justify',
+    paddingLeft: 20,
   },
   errorText: {
     color: 'red',
