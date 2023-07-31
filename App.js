@@ -1,16 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import HTML from 'react-native-render-html';
-import SplashScreen from 'react-native-splash-screen';
-import Modal from 'react-native-modal';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
 
 const API_KEY = '3ad313351a7449639612b18f3969f4b3';
 const API_URL = 'https://api.spoonacular.com/recipes/findByIngredients';
@@ -19,17 +8,10 @@ const IMAGE_URL = 'https://spoonacular.com/recipeImages/';
 const App = () => {
   const [ingredients, setIngredients] = useState('');
   const [recipe, setRecipe] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    // Hide the splash screen when the app is ready
-    SplashScreen.hide();
-  }, []);
 
   const fetchRecipe = async () => {
     setError('');
-    setLoading(true);
     try {
       const response = await fetch(
         `${API_URL}?apiKey=${API_KEY}&ingredients=${encodeURIComponent(
@@ -51,7 +33,6 @@ const App = () => {
     } catch (error) {
       setError('Error fetching data from the server.');
     }
-    setLoading(false);
   };
 
   return (
@@ -64,14 +45,6 @@ const App = () => {
         onChangeText={(text) => setIngredients(text)}
       />
       <Button title="Get Recipe" onPress={fetchRecipe} />
-      {loading && (
-        <Modal isVisible={loading} animationIn="fadeIn">
-          <View style={styles.loadingContainer}>
-            <ActivityIndicator size="large" color="#000" />
-            <Text>Loading...</Text>
-          </View>
-        </Modal>
-      )}
       {recipe && (
         <View style={styles.recipeContainer}>
           <Text style={styles.recipeTitle}>{recipe.title}</Text>
@@ -81,11 +54,9 @@ const App = () => {
               style={styles.recipeImage}
             />
           )}
-          <HTML
-            source={{ html: recipe.instructions || 'Instructions not available.' }}
-            containerStyle={styles.recipeInstructions}
-            tagsStyles={{ ol: { paddingLeft: 20 } }}
-          />
+          <Text style={styles.recipeInstructions}>
+            {recipe.instructions || 'Instructions not available.'}
+          </Text>
         </View>
       )}
       {error !== '' && <Text style={styles.errorText}>{error}</Text>}
@@ -131,16 +102,10 @@ const styles = StyleSheet.create({
   recipeInstructions: {
     fontSize: 16,
     textAlign: 'justify',
-    paddingLeft: 20,
   },
   errorText: {
     color: 'red',
     marginTop: 10,
-  },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

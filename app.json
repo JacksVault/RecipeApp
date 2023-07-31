@@ -4,10 +4,10 @@
     "slug": "RecipeApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/FoodAndDrinkDesignColour.svg",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/FoodAndDrinkDesignColour.svg",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,12 +19,12 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/FoodAndDrinkDesignColour.svg",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/FoodAndDrinkDesignColour.svg"
+      "favicon": "./assets/favicon.png"
     }
   }
 }
