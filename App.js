@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, ImageBackground, Image, StyleSheet } from 'react-native';
 import HTML from 'react-native-render-html';
 
 const API_KEY = '3ad313351a7449639612b18f3969f4b3';
@@ -37,37 +37,47 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Recipe Recommendation</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your ingredients (comma-separated)"
-        value={ingredients}
-        onChangeText={(text) => setIngredients(text)}
-      />
-      <Button title="Get Recipe" onPress={fetchRecipe} />
-      {recipe && (
-        <View style={styles.recipeContainer}>
-          <Text style={styles.recipeTitle}>{recipe.title}</Text>
-          {recipe.image && (
-            <Image
-              source={{ uri: `${IMAGE_URL}${recipe.image}` }}
-              style={styles.recipeImage}
+    <ImageBackground
+      source={require('./assets/foodAndDrinkDesign.svg')}
+      style={styles.backgroundImage}
+    >
+      <View style={styles.container}>
+        <Text style={styles.title}>Recipe Recommendation</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your ingredients (comma-separated)"
+          value={ingredients}
+          onChangeText={(text) => setIngredients(text)}
+        />
+        <Button title="Get Recipe" onPress={fetchRecipe} />
+        {recipe && (
+          <View style={styles.recipeContainer}>
+            <Text style={styles.recipeTitle}>{recipe.title}</Text>
+            {recipe.image && (
+              <Image
+                source={{ uri: `${IMAGE_URL}${recipe.image}` }}
+                style={styles.recipeImage}
+              />
+            )}
+            <HTML
+              source={{ html: recipe.instructions || 'Instructions not available.' }}
+              containerStyle={styles.recipeInstructions}
+              tagsStyles={{ ol: { paddingLeft: 20 } }}
             />
-          )}
-          <HTML
-            source={{ html: recipe.instructions || 'Instructions not available.' }}
-            containerStyle={styles.recipeInstructions}
-            tagsStyles={{ ol: { paddingLeft: 20 } }}
-          />
-        </View>
-      )}
-      {error !== '' && <Text style={styles.errorText}>{error}</Text>}
-    </View>
+          </View>
+        )}
+        {error !== '' && <Text style={styles.errorText}>{error}</Text>}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -78,6 +88,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#fff', // Add text color to make it visible on the background image
   },
   input: {
     width: '100%',
@@ -87,6 +98,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 20,
+    backgroundColor: '#fff', // Add a background color to make it visible on the background image
+    opacity: 0.8, // Adjust the opacity to make the input slightly transparent
   },
   recipeContainer: {
     marginTop: 30,
@@ -95,6 +108,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff', // Add text color to make it visible on the background image
   },
   recipeImage: {
     width: 200,
@@ -106,10 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'justify',
     paddingLeft: 20,
+    color: '#fff', // Add text color to make it visible on the background image
   },
   errorText: {
     color: 'red',
     marginTop: 10,
+    color: '#fff', // Add text color to make it visible on the background image
   },
 });
 
