@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Image, StyleSheet } from 'react-native';
 
-const API_KEY = '3ad313351a7449639612b18f3969f4b3';
+const API_KEY = 'your API_KEY';
 const API_URL = 'https://api.spoonacular.com/recipes/findByIngredients';
 const IMAGE_URL = 'https://spoonacular.com/recipeImages/';
 
